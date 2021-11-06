@@ -742,8 +742,8 @@ externalpipe(const Arg *arg)
 			dup2(to[0], STDIN_FILENO);
 			close(to[0]);
 			close(to[1]);
-			execvp(((char **)arg->v[0], (char **)arg->v));
-			fprintf(strerr, "st: execvp %s\n", ((char **)arg->v)[0]);
+			execvp(((char **)arg->v)[0], (char **)arg->v);
+			fprintf(stderr, "st: execvp %s\n", ((char **)arg->v)[0]);
 			perror("failed");
 			exit(0);
 	}
@@ -765,7 +765,7 @@ externalpipe(const Arg *arg)
 			continue;
 		if (xwrite(to[1], "\n", 1) < 0)
 			break;
-		newline = 0
+		newline = 0;
 	}
 	if (newline)
 		(void)xwrite(to[1], "\n", 1);
@@ -787,7 +787,7 @@ sigchld(int a)
 		if (p == 0 && wait(&stat) < 0)
 			die("wait %s\n", strerror(errno));
 		/* reinstall sigchld handler */
-		signal(SIGCHLD, sighchld);
+		signal(SIGCHLD, sigchld);
 		return;
 	}
 	if (WIFEXITED(stat) && WEXITSTATUS(stat))
