@@ -785,11 +785,12 @@ sigchld(int a)
 
 	if (pid != p) {
 		if (p == 0 && wait(&stat) < 0)
-			die("wait %s\n", strerror(errno));
+			die("wait: %s\n", strerror(errno));
 		/* reinstall sigchld handler */
 		signal(SIGCHLD, sigchld);
 		return;
 	}
+
 	if (WIFEXITED(stat) && WEXITSTATUS(stat))
 		die("child exited with status %d\n", WEXITSTATUS(stat));
 	else if (WIFSIGNALED(stat))
