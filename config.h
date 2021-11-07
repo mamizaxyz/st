@@ -176,6 +176,10 @@ static unsigned int defaultattr = 11;
  */
 static uint forcemousemod = ShiftMask;
 
+/* Internal keyboard shortcuts. */
+#define MODKEY Mod1Mask
+#define TERMMOD (Mod1Mask|ShiftMask)
+
 /*
  * Internal mouse shortcuts.
  * Beware that overloading Button1 will disable the selection.
@@ -184,16 +188,14 @@ static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
 	{ XK_NO_MOD,            Button4, kscrollup,      {.i = 1} },
 	{ XK_NO_MOD,	        Button5, kscrolldown,    {.i = 1} },
+	{ MODKEY,            	Button4, zoom,		 {.f = 1} },
+	{ MODKEY,            	Button5, zoom,      	 {.f =-1} },
 	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
 	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
 	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
 	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
 	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
 };
-
-/* Internal keyboard shortcuts. */
-#define MODKEY Mod1Mask
-#define TERMMOD (Mod1Mask|ShiftMask)
 
 static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NULL};
 
